@@ -34,7 +34,7 @@
     "appName": "sql-context-presets"
   },
   "bin": {
-    "sql-context-presets": "sql-context-presets"
+    "sql-context-presets": "dist/index.js"
   },
   "dependencies": {
     "@amzn/amazon-ca-certs": "*",
