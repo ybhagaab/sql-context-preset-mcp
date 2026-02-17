@@ -1,0 +1,22 @@
+#!/bin/bash
+set -euo pipefail
+
+# Set minimum required Node version
+MIN_NODE_VERSION=20
+
+# Check if node runtime is available and meets the minimum version requirement
+if ! command -v node &> /dev/null; then
+  1>&2 echo "Please install node >=${MIN_NODE_VERSION}. Follow https://docs.hub.amazon.dev/languages/typescript/#typescript-install-node to install."
+  exit 1
+fi
+
+# Check node version meets minimum requirement (v20+)
+NODE_VERSION=$(node --version | cut -d 'v' -f2 | cut -d '.' -f1)
+if [ "${NODE_VERSION}" -lt "${MIN_NODE_VERSION}" ]; then
+  1>&2 echo "Node version ${NODE_VERSION} detected, but version ${MIN_NODE_VERSION} or higher is required."
+  1>&2 echo "Please upgrade node to >=${MIN_NODE_VERSION}. Follow https://docs.hub.amazon.dev/languages/typescript/#typescript-install-node to upgrade."
+  exit 1
+fi
+
+SCRIPT_DIR="$( cd -- "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 ; pwd -P )"
+exec node "$SCRIPT_DIR/dist/index.js" "$@"
