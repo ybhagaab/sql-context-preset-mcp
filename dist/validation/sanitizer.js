@@ -1,4 +1,3 @@
-"use strict";
 /**
  * Response Content Sanitizer
  *
@@ -7,14 +6,6 @@
  * - Injection attempts
  * - Control character attacks
  */
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.sanitizeString = sanitizeString;
-exports.sanitizeValue = sanitizeValue;
-exports.sanitizeRows = sanitizeRows;
-exports.sanitizeColumns = sanitizeColumns;
-exports.sanitizeResponseText = sanitizeResponseText;
-exports.detectSuspiciousPatterns = detectSuspiciousPatterns;
-exports.truncateString = truncateString;
 // =============================================================================
 // Character Patterns to Strip
 // =============================================================================
@@ -64,7 +55,7 @@ const VARIATION_SELECTORS = /[\uFE00-\uFE0F]|[\u{E0100}-\u{E01EF}]/gu;
  * @param input - The string to sanitize
  * @returns Sanitized string with dangerous characters removed
  */
-function sanitizeString(input) {
+export function sanitizeString(input) {
     if (typeof input !== 'string') {
         return String(input);
     }
@@ -81,7 +72,7 @@ function sanitizeString(input) {
  * @param value - The value to sanitize
  * @returns Sanitized value
  */
-function sanitizeValue(value) {
+export function sanitizeValue(value) {
     if (value === null || value === undefined) {
         return value;
     }
@@ -112,7 +103,7 @@ function sanitizeValue(value) {
  * @param rows - Array of row arrays
  * @returns Sanitized rows
  */
-function sanitizeRows(rows) {
+export function sanitizeRows(rows) {
     return rows.map(row => row.map(cell => {
         if (typeof cell === 'string') {
             return sanitizeString(cell);
@@ -126,7 +117,7 @@ function sanitizeRows(rows) {
  * @param columns - Array of column names
  * @returns Sanitized column names
  */
-function sanitizeColumns(columns) {
+export function sanitizeColumns(columns) {
     return columns.map(sanitizeString);
 }
 /**
@@ -135,7 +126,7 @@ function sanitizeColumns(columns) {
  * @param text - Response text to sanitize
  * @returns Sanitized text
  */
-function sanitizeResponseText(text) {
+export function sanitizeResponseText(text) {
     return sanitizeString(text);
 }
 // =============================================================================
@@ -147,7 +138,7 @@ function sanitizeResponseText(text) {
  * @param input - String to check
  * @returns Object with validation result and details
  */
-function detectSuspiciousPatterns(input) {
+export function detectSuspiciousPatterns(input) {
     const patterns = [];
     // Check for null bytes
     if (input.includes('\x00')) {
@@ -179,7 +170,7 @@ function detectSuspiciousPatterns(input) {
  * @param maxLength - Maximum length
  * @returns Truncated string
  */
-function truncateString(input, maxLength) {
+export function truncateString(input, maxLength) {
     if (input.length <= maxLength) {
         return input;
     }

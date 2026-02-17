@@ -19,6 +19,7 @@
  * - U+000E-U+001F: Control chars
  * - U+007F: Delete
  */
+// eslint-disable-next-line no-control-regex -- Intentionally matching control characters for sanitization
 const CONTROL_CHARS = /[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g;
 
 /**

@@ -98,7 +98,7 @@ async function loadFromLocalDir(contextDir: string): Promise<void> {
  */
 async function loadFromS3(s3Uri: string): Promise<void> {
   try {
-    const match = s3Uri.match(/^s3:\/\/([^\/]+)\/?(.*)$/);
+    const match = s3Uri.match(/^s3:\/\/([^/]+)\/?(.*)$/);
     if (!match) {
       console.error(`Invalid S3 URI format: ${s3Uri}`);
       return;

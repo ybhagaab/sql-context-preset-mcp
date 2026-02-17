@@ -44,7 +44,7 @@ const tableNamePattern = /^[a-zA-Z_][a-zA-Z0-9_]*(\.[a-zA-Z_][a-zA-Z0-9_]*)?$/;
 const schemaNamePattern = /^[a-zA-Z_][a-zA-Z0-9_]*$/;
 
 /** Valid preset name pattern */
-const presetNamePattern = /^[a-zA-Z0-9_\-\.]+$/;
+const presetNamePattern = /^[a-zA-Z0-9_\-.]+$/;
 
 export const RunQueryInputSchema = z.object({
   sql: z.string()

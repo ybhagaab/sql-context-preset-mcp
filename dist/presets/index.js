@@ -1,4 +1,3 @@
-"use strict";
 /**
  * Schema Context Presets
  *
@@ -10,48 +9,9 @@
  * - SQL_CONTEXT_S3: S3 URI (s3://bucket/prefix/) - loads all .md/.json files
  * - SQL_CONTEXT_URL: HTTP/HTTPS URL to a single context file
  */
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    var desc = Object.getOwnPropertyDescriptor(m, k);
-    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
-      desc = { enumerable: true, get: function() { return m[k]; } };
-    }
-    Object.defineProperty(o, k2, desc);
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || (function () {
-    var ownKeys = function(o) {
-        ownKeys = Object.getOwnPropertyNames || function (o) {
-            var ar = [];
-            for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) ar[ar.length] = k;
-            return ar;
-        };
-        return ownKeys(o);
-    };
-    return function (mod) {
-        if (mod && mod.__esModule) return mod;
-        var result = {};
-        if (mod != null) for (var k = ownKeys(mod), i = 0; i < k.length; i++) if (k[i] !== "default") __createBinding(result, mod, k[i]);
-        __setModuleDefault(result, mod);
-        return result;
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.listPresets = listPresets;
-exports.listPresetsAsync = listPresetsAsync;
-exports.getPreset = getPreset;
-exports.getPresetAsync = getPresetAsync;
-exports.reloadCustomPresets = reloadCustomPresets;
-const fs = __importStar(require("fs"));
-const path = __importStar(require("path"));
-const client_s3_1 = require("@aws-sdk/client-s3");
+import * as fs from 'fs';
+import * as path from 'path';
+import { S3Client, ListObjectsV2Command, GetObjectCommand } from '@aws-sdk/client-s3';
 // Cache for custom presets
 let customPresetsCache = null;
 let presetsInitialized = false;
@@ -125,9 +85,9 @@ async function loadFromS3(s3Uri) {
         const bucket = match[1];
         const prefix = match[2] || '';
         const region = process.env.SQL_AWS_REGION || 'us-east-1';
-        const s3Client = new client_s3_1.S3Client({ region });
+        const s3Client = new S3Client({ region });
         // List objects in the bucket/prefix
-        const listCommand = new client_s3_1.ListObjectsV2Command({
+        const listCommand = new ListObjectsV2Command({
             Bucket: bucket,
             Prefix: prefix,
         });
@@ -141,7 +101,7 @@ async function loadFromS3(s3Uri) {
             if (!key.endsWith('.md') && !key.endsWith('.json'))
                 continue;
             // Get the object content
-            const getCommand = new client_s3_1.GetObjectCommand({
+            const getCommand = new GetObjectCommand({
                 Bucket: bucket,
                 Key: key,
             });
@@ -274,24 +234,24 @@ function loadCustomPresets() {
     initializePresets().catch(err => console.error('Error initializing presets:', err));
     return customPresetsCache;
 }
-function listPresets() {
+export function listPresets() {
     return Object.keys(loadCustomPresets());
 }
-async function listPresetsAsync() {
+export async function listPresetsAsync() {
     const presets = await initializePresets();
     return Object.keys(presets);
 }
-function getPreset(name) {
+export function getPreset(name) {
     return loadCustomPresets()[name.toLowerCase()];
 }
-async function getPresetAsync(name) {
+export async function getPresetAsync(name) {
     const presets = await initializePresets();
     return presets[name.toLowerCase()];
 }
 /**
  * Reload custom presets (useful if files changed)
  */
-function reloadCustomPresets() {
+export function reloadCustomPresets() {
     customPresetsCache = null;
     presetsInitialized = false;
 }
