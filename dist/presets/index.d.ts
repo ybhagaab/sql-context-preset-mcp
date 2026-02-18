@@ -3,11 +3,9 @@
  *
  * Loads custom user-provided context files for schema knowledge.
  *
- * Supported sources:
- * - SQL_CONTEXT_DIR: Local directory containing .md or .json files
- * - SQL_CONTEXT_FILE: Single local file path
- * - SQL_CONTEXT_S3: S3 URI (s3://bucket/prefix/) - loads all .md/.json files
- * - SQL_CONTEXT_URL: HTTP/HTTPS URL to a single context file
+ * Custom contexts can be loaded via:
+ * - SQL_CONTEXT_DIR env var: Directory containing .md or .json files
+ * - SQL_CONTEXT_FILE env var: Single context file path
  */
 export interface SchemaPreset {
     name: string;
@@ -20,11 +18,8 @@ export interface SchemaPreset {
     }>;
 }
 export declare function listPresets(): string[];
-export declare function listPresetsAsync(): Promise<string[]>;
 export declare function getPreset(name: string): SchemaPreset | undefined;
-export declare function getPresetAsync(name: string): Promise<SchemaPreset | undefined>;
 /**
  * Reload custom presets (useful if files changed)
  */
 export declare function reloadCustomPresets(): void;
-//# sourceMappingURL=index.d.ts.map

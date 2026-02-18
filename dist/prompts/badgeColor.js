@@ -1,21 +1,19 @@
 import { z } from 'zod';
 import * as dedent from 'dedent-js';
-import type { Prompt } from '../types';
 import { validateAmazonLogin } from '../utils.js';
-
-export const amazonEmployeeBadgeColorPrompt: Prompt<{ login: z.ZodString }> = {
-  name: 'amazon-employee-badge-color',
-  description: 'A prompt template that instruct LLM to figure out the badge color of the employee.',
-  paramSchema: { login: z.string() },
-  cb: ({ login }) => {
-    validateAmazonLogin(login);
-    return {
-      messages: [
-        {
-          role: 'user',
-          content: {
-            type: 'text',
-            text: dedent.default(`
+export const amazonEmployeeBadgeColorPrompt = {
+    name: 'amazon-employee-badge-color',
+    description: 'A prompt template that instruct LLM to figure out the badge color of the employee.',
+    paramSchema: { login: z.string() },
+    cb: ({ login }) => {
+        validateAmazonLogin(login);
+        return {
+            messages: [
+                {
+                    role: 'user',
+                    content: {
+                        type: 'text',
+                        text: dedent.default(`
             <task_description>
             Determine the badge color for an Amazon employee based on their tenure with the company.
             </task_description>
@@ -49,9 +47,9 @@ export const amazonEmployeeBadgeColorPrompt: Prompt<{ login: z.ZodString }> = {
             The badge color for ${login} is [badge_color], because their tenure is [tenure_years] years.
             </output_format>
             `),
-          },
-        },
-      ],
-    };
-  },
+                    },
+                },
+            ],
+        };
+    },
 };

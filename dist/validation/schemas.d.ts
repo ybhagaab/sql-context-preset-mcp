@@ -73,13 +73,13 @@ export declare const QueryResultSchema: z.ZodObject<{
 }, "strip", z.ZodTypeAny, {
     columns: string[];
     rows: (string | number | boolean | Date | null)[][];
-    rowCount: number;
     executionTime: number;
+    rowCount: number;
 }, {
     columns: string[];
     rows: (string | number | boolean | Date | null)[][];
-    rowCount: number;
     executionTime: number;
+    rowCount: number;
 }>;
 /** Schema for connection status response */
 export declare const ConnectionStatusSchema: z.ZodObject<{
@@ -87,13 +87,13 @@ export declare const ConnectionStatusSchema: z.ZodObject<{
     user: z.ZodString;
     host: z.ZodNullable<z.ZodString>;
 }, "strip", z.ZodTypeAny, {
+    host: string | null;
     database: string;
     user: string;
-    host: string | null;
 }, {
+    host: string | null;
     database: string;
     user: string;
-    host: string | null;
 }>;
 /** Schema for schema list response */
 export declare const SchemaListSchema: z.ZodArray<z.ZodObject<{
@@ -191,4 +191,3 @@ export type GetSchemaContextInput = z.infer<typeof GetSchemaContextInputSchema>;
 export type QueryResult = z.infer<typeof QueryResultSchema>;
 export type ConnectionStatus = z.infer<typeof ConnectionStatusSchema>;
 export type McpResponse = z.infer<typeof McpResponseSchema>;
-//# sourceMappingURL=schemas.d.ts.map

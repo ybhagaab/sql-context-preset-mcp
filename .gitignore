@@ -1,5 +1,26 @@
-/node_modules
-/build
-/dist
-/coverage
-.eslintcache
+# Dependencies
+node_modules/
+
+# Test coverage
+coverage/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Environment
+.env
+.env.local
+
+# NOTE: dist/ is NOT ignored here - it must be included in the npm package
+# The files field in package.json explicitly includes dist/

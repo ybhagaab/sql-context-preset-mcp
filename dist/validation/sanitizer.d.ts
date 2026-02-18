@@ -59,4 +59,3 @@ export declare function detectSuspiciousPatterns(input: string): {
  * @returns Truncated string
  */
 export declare function truncateString(input: string, maxLength: number): string;
-//# sourceMappingURL=sanitizer.d.ts.map
