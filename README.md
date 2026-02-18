@@ -268,7 +268,9 @@ For databases behind a bastion host:
 
 ## Schema Context Presets
 
-Provide custom schema documentation for your team & include all contexual information pertaining to the events, parameters, values & tables. You can add multiple schemas which will show as presets for your AI assistant to choose from:
+Provide custom schema documentation for your team & include all contextual information pertaining to the events, parameters, values & tables. You can add multiple schemas which will show as presets for your AI assistant to choose from.
+
+### Local Directory
 
 ```json
 {
@@ -277,6 +279,38 @@ Provide custom schema documentation for your team & include all contexual inform
   }
 }
 ```
+
+### S3 Bucket (Team Sharing)
+
+Store context files in S3 for centralized team sharing. Works with private buckets using your AWS credentials:
+
+```json
+{
+  "env": {
+    "SQL_CONTEXT_S3": "s3://my-team-bucket/schema-contexts/",
+    "SQL_AWS_REGION": "us-east-1",
+    "SQL_AWS_PROFILE": "my-profile"
+  }
+}
+```
+
+All `.md` and `.json` files in the bucket/prefix will be loaded as presets.
+
+**Authentication:** Uses the same AWS credential chain as IAM auth - environment variables, AWS profile, IAM role, or SSO credentials. You need `s3:ListBucket` and `s3:GetObject` permissions on the bucket.
+
+### HTTP/HTTPS URL
+
+Load a single context file from any URL:
+
+```json
+{
+  "env": {
+    "SQL_CONTEXT_URL": "https://wiki.example.com/schema-docs/analytics.md"
+  }
+}
+```
+
+### File Formats
 
 **Markdown format (`my-schema.md`):**
 ```markdown
@@ -329,8 +363,10 @@ Always include: `status = 'active'`
 | `SQL_SSL_CERT` | No | - | Client certificate path |
 | `SQL_SSL_KEY` | No | - | Client private key path |
 | **Context** ||||
-| `SQL_CONTEXT_DIR` | No | - | Schema context directory |
-| `SQL_CONTEXT_FILE` | No | - | Single context file path |
+| `SQL_CONTEXT_DIR` | No | - | Local directory with context files |
+| `SQL_CONTEXT_FILE` | No | - | Single local context file path |
+| `SQL_CONTEXT_S3` | No | - | S3 URI (`s3://bucket/prefix/`) |
+| `SQL_CONTEXT_URL` | No | - | HTTP/HTTPS URL to context file |
 
 *Can be provided via Secrets Manager secret
 
