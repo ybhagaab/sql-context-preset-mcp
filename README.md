@@ -348,6 +348,42 @@ Once configured, ask the AI assistant:
 
 ---
 
+## Why MCP Schema Presets vs Steering Files?
+
+If you're using Kiro or similar AI assistants, you might wonder: "Why not just use steering files for database context?"
+
+The key differences:
+
+| Aspect | Steering Files | MCP Schema Presets |
+|--------|---------------|-------------------|
+| Scope | Workspace-bound (`.kiro/steering/`) | User-level, works across all workspaces |
+| Loading | Always loaded or file-pattern triggered | On-demand via `list_presets` → `get_schema_context` |
+| Multi-schema | All files load together (bloats context) | Pick exactly which schema to load |
+| Sharing | Copy files to each workspace | Point to shared folder (team drive, S3, wiki export) |
+| Discovery | Must know exact filename to reference | `list_presets` shows all available options |
+
+**When MCP presets shine:**
+
+- **On-demand loading** - Schema context is only loaded when you ask for it. No wasted tokens when you're not doing SQL work.
+
+- **Multiple schemas, selective loading** - Have 5 different database schemas? Load only the one you need:
+  ```
+  /team-contexts/
+    analytics.md      → "get analytics context"
+    payments.md       → "get payments context"
+    user-events.md    → "get user-events context"
+  ```
+
+- **Works everywhere** - Your database knowledge follows you across any workspace, project, or scratch folder.
+
+- **Centralized team sharing** - Point `SQL_CONTEXT_DIR` to a shared location. Update once, everyone gets the latest schema docs.
+
+- **Integrated with SQL tools** - The AI knows to load context BEFORE writing queries, and can combine it with `describe_table`, `list_schemas` for complete understanding.
+
+**Bottom line:** Steering files = "how to code in this repo". MCP presets = "how to query this database, anywhere."
+
+---
+
 ## Security Notes
 
 - Credentials are passed via environment variables (never stored in code)
