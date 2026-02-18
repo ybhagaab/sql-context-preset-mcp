@@ -1,6 +1,6 @@
-# SQL Client MCP Server
+# SQL Client MCP Server with Context Presets
 
-An MCP (Model Context Protocol) server that enables AI assistants to execute SQL queries on PostgreSQL and Redshift databases.
+An MCP server that lets any AI assistant query your database with zero prior knowledge. Schema context is loaded on-demand via presets — no steering files, no training, no wasted tokens. Point it at your database, drop in a context file, and your assistant understands your schema immediately.
 
 ## Features
 
