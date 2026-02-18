@@ -442,3 +442,7 @@ npm run build
 # Run in development
 npm run dev
 ```
+
+## License
+
+MIT — see [LICENSE](./LICENSE) for details.
