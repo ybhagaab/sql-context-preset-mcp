@@ -22,5 +22,12 @@ logs/
 .env
 .env.local
 
+# Internal Amazon files
+appsec/
+SHEPHERD-REMEDIATION.md
+docs/
+.npmrc
+*.tgz
+
 # NOTE: dist/ is NOT ignored here - it must be included in the npm package
 # The files field in package.json explicitly includes dist/
